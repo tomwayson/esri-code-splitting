@@ -9,6 +9,7 @@ const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
 const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
+const ArcGISPlugin = require("@arcgis/webpack-plugin");
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
 
@@ -95,7 +96,8 @@ module.exports = {
       // To fix this, we prevent you from importing files out of src/ -- if you'd like to,
       // please link the files into your node_modules/ and let module-resolution kick in.
       // Make sure your source files are compiled, as they will not be processed in any way.
-      new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
+      // NOTE: this causes a build error w/ @arcgis/webpack-plugin
+      // new ModuleScopePlugin(paths.appSrc, [paths.appPackageJson]),
     ],
   },
   module: {
@@ -243,6 +245,8 @@ module.exports = {
     // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
     // You can remove this if you don't use Moment.js:
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    // allow import from 'esri' modules
+    new ArcGISPlugin()
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
@@ -252,6 +256,10 @@ module.exports = {
     net: 'empty',
     tls: 'empty',
     child_process: 'empty',
+    // recommended for @arcgis/webpack-plugin
+    // https://github.com/Esri/arcgis-webpack-plugin#node-globals
+    // process: false,
+    // global: false
   },
   // Turn off performance hints during development because we don't do any
   // splitting or minification in interest of speed. These warnings become

@@ -86,10 +86,14 @@
   "babel": {
     "presets": [
       "react-app"
-    ]
+    ],
+    "plugins": ["transform-es2015-modules-amd"]
   },
   "eslintConfig": {
     "extends": "react-app"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@arcgis/webpack-plugin": "^4.7.1",
+    "babel-plugin-transform-es2015-modules-amd": "^6.24.1"
+  }
 }
