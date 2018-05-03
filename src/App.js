@@ -28,6 +28,7 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to React</h1>
         </header>
+        {/* load the map only after the user clicks the button */}
         { Map !== null ? <Map /> : <p><button onClick={this.handleClick}>Load Map</button></p> }
       </div>
     );
